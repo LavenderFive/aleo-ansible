@@ -20,3 +20,10 @@
         - cargo build --release
       environment:
         PATH: "{{ path }}"
+
+    - name: Copy binary
+      copy:
+        remote_src: true
+        src: "{{ user_dir }}/daemons/aleo/target/release/snarkos"
+        dest: "{{ user_dir }}/.cargo/bin/snarkos"
+        mode: 0755
