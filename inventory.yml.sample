@@ -37,7 +37,7 @@ all:
             peers: "5.0.5.12:4130,5.0.5.14:4130"
 
   vars:
-    ansible_user: root
+    ansible_user: ubuntu
     ansible_port: 22
     user_dir: "/home/{{ ansible_user }}"
     path: "/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin:/usr/local/go/bin:{{ user_dir }}/go/bin:{{ user_dir }}/.cargo/bin"
