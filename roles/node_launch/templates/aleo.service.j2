@@ -1,0 +1,36 @@
+[Unit]
+Description=SnarkOS Node
+After=NetworkManager.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User={{ ansible_user }}
+Group={{ ansible_user}}
+LimitMEMLOCK=infinity
+LimitNOFILE=65535
+Restart=always
+#RuntimeMaxSec=1800s
+WorkingDirectory={{ user_dir }}/.aleo
+
+ExecStart={{ user_dir }}/.cargo/bin/snarkos start \
+--network {{ network }} \
+--nodisplay \
+--logfile /dev/null \
+--verbosity 4 \
+{% if "validator" in hostname or synced is defined and synced is true %}
+--validator \
+--validators {{ validator_peers }} \
+--private-key-file {{ user_dir }}/.aleo/validator.key \
+{% else %}
+--client \
+{% endif %}
+--nocdn \
+--metrics \
+--peers {{ peers }}
+ExecStop=/bin/kill -s INT ${MAINPID}
+RestartSec=5s
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
