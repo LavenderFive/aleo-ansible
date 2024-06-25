@@ -1,0 +1,17 @@
+exec {{ user_dir }}/.cargo/bin/snarkos start \
+--network {{ network }} \
+--nodisplay \
+--logfile /dev/null \
+--verbosity 4 \
+{% if "validator" in inventory_hostname %}
+--validators {{ validator_peers }} \
+--private-key-file {{ user_dir }}/.aleo/validator.key \
+{{ '#' if not synced|bool }}--validator \
+{{ '#' if synced|bool }}--client \
+{% elif "client" in inventory_hostname %}
+--allow-external-peers \
+--client \
+{% endif %}
+--nocdn \
+--metrics \
+--peers {{ peers }}

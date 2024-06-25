@@ -1,1 +1,46 @@
 ---
+---
+all:
+  children:
+    networks:
+      children:
+        canarynet:
+          hosts:
+            canarynet_validator:
+              ansible_host: 5.0.3.1
+              synced: false
+              validator_peers: "1.2.3.4:5000,3.4.5.6:5000"
+            canarynet_client1:
+              ansible_host: 5.0.4.1
+            canarynet_client2:
+              ansible_host: 5.0.4.2
+            canarynet_client3:
+              ansible_host: 5.0.4.3
+          vars:
+            network: canarynet
+            node_version: canary-v0.3.0
+            peers: "5.0.5.12:4130,5.0.5.14:4130"
+
+        testnet_beta:
+          hosts:
+            testnet_validator:
+              ansible_host: 5.0.5.15
+              synced: false
+              validator_peers: "1.2.3.4:5000,3.4.5.6:5000"
+            testnet_client1:
+              ansible_host: 5.0.5.18
+            testnet_client2:
+              ansible_host: 5.0.5.19
+          vars:
+            network: testnet_beta
+            node_version: canary-v0.3.0
+            peers: "5.0.5.12:4130,5.0.5.14:4130"
+
+  vars:
+    ansible_user: root
+    ansible_port: 22
+    user_dir: "/home/{{ ansible_user }}"
+    path: "/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin:/usr/local/go/bin:{{ user_dir }}/go/bin:{{ user_dir }}/.cargo/bin"
+
+    # github
+    github_repo: https://github.com/AleoNet/snarkOS.git
