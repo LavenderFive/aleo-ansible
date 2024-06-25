@@ -1,0 +1,22 @@
+---
+- name: Install from source
+  when: binary is undefined
+  become: false
+  block:
+    - name: Clone node repo
+      git:
+        repo: "{{ github_repo }}"
+        dest: "{{ user_dir }}/daemons/aleo"
+        version: "{{ node_version }}"
+        update: true
+        force: true
+        recursive: false
+
+    - name: Install node
+      command: "{{ item }}"
+      args:
+        chdir: "{{ user_dir }}/daemons/aleo"
+      with_items:
+        - cargo build --release
+      environment:
+        PATH: "{{ path }}"
