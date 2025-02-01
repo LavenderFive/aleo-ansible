@@ -1,12 +1,26 @@
 ---
-- name: make working directory
+- name: Define script path variable
+  vars:
+    aleo_script_path: "{{ working_dir }}/aleo.sh"
+
+- name: Make working directory
   file:
     path: "{{ working_dir }}"
     state: directory
     mode: "0755"
 
-- name: copy aleo.sh script
+- name: Copy aleo.sh script
   template:
     src: aleo.sh.j2
-    dest: "{{ working_dir }}/aleo.sh"
-    mode: 0755
+    dest: "{{ aleo_script_path }}"
+    mode: "0755"
+
+- name: Verify aleo.sh script file is created
+  stat:
+    path: "{{ aleo_script_path }}"
+  register: aleo_script
+
+- name: Fail if aleo.sh script was not created
+  fail:
+    msg: "aleo.sh script file was not created successfully!"
+  when: not aleo_script.stat.exists
