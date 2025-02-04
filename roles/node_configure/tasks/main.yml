@@ -1,8 +1,4 @@
 ---
-- name: Define script path variable
-  vars:
-    aleo_script_path: "{{ working_dir }}/aleo.sh"
-
 - name: Make working directory
   file:
     path: "{{ working_dir }}"

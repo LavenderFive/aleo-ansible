@@ -1,8 +1,4 @@
 ---
-- name: define variables
-  vars:
-    aleo_service_path: "/etc/systemd/system/aleo.service"
-
 - name: copy service file
   become: true
   template:
