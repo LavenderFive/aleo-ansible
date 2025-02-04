@@ -9,8 +9,18 @@ WorkingDirectory={{ working_dir }}
 Environment="PATH={{ path }}"
 ExecStart=/bin/bash {{ working_dir }}/aleo.sh
 ExecStop=/bin/kill -s INT ${MAINPID}
-Restart=on-failure
+Restart=always
 RestartSec=5
+StartLimitInterval=60
+StartLimitBurst=5
+
+# Logging
+StandardOutput=append:/var/log/aleo.log
+StandardError=append:/var/log/aleo.log
+
+# Resource limits
+TimeoutStopSec=30
+
 # Systemd scheduling
 CPUSchedulingPolicy=fifo
 CPUSchedulingPriority=20

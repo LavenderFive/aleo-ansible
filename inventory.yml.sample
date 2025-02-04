@@ -43,5 +43,8 @@ all:
     user_dir: "/home/{{ ansible_user }}"
     path: "/sbin:/usr/sbin:/bin:/usr/bin:/usr/local/bin:/usr/local/go/bin:{{ user_dir }}/go/bin:{{ user_dir }}/.cargo/bin"
 
+    aleo_service_path: "/etc/systemd/system/aleo.service"
+    aleo_script_path: "{{ working_dir }}/aleo.sh"
+
     # github
     github_repo: https://github.com/AleoNet/snarkOS.git
